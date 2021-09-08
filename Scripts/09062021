@@ -13,8 +13,6 @@ from Bio import SeqIO
 import os
 from ete3 import Tree
 
-# Declares
-
 """# **Helper functions**"""
 
 def sort(distances):
@@ -54,7 +52,7 @@ def output_dna(fasta, excluded_IDs):
   print("# Saved to (subsampled fasta file):", os.path.join(output_dir, output_file.split("/")[-1]))
 #end method
 
-def output_nwk(tree, excluded_IDs, all_record_IDs):
+def output_nwk(tree, excluded_IDs):
   global num_seqs
   x = num_seqs - len(excluded_IDs)
   print("# Output TREE exclusion list length", len(excluded_IDs))
@@ -72,28 +70,31 @@ def output_nwk(tree, excluded_IDs, all_record_IDs):
   # Newick, branch pruning logic.
   t = Tree(tree)
   
-  # Pruning logic here --------------------------------------------
-  KeepThese = []
-  #for item in excluded_IDs:
-  for item in all_record_IDs:
-      if item not in excluded_IDs:
-          KeepThese.append(item)
-      #end if
-  #end for
-   
-  t.prune(tuple(KeepThese))
   #t.prune(tuple(excluded_IDs))
   #t.delete(tuple(excluded_IDs))
-  
-  #for item in excluded_IDs:
-  #    G = t.search_nodes(name=item)[0]
-  #    G.delete()
+  for item in excluded_IDs:
+      G = t.search_nodes(name=item)[0]
+      G.delete()
   
   outfile_tree_print = os.path.join(output_dir, output_file_print.split("/")[-1])
   #print("# outfile_tree (variable):", outfile_tree_print)
   
   #outfile_tree = os.path.join(output_dir, output_file.split("/")[-1])
   t.write(format=1, outfile=outfile_tree_print)
+  
+  #with open(tree, "r") as handle:
+  #  for n, record in enumerate(SeqIO.parse(handle, "fasta")):
+  #    id = record.id
+  #    if id in excluded_IDs:
+  #      continue # skips excluded IDs
+  #    #end if
+  #    desc = record.description
+  #    seq = record.seq
+  #    #output fasta
+  #    with open(os.path.join(output_dir, output_file.split("/")[-1]), 'a') as f_out:
+  #      SeqIO.write(record, f_out, "fasta")
+  #    #end with
+  #end with
   
   print("# Saved to (newick file):", outfile_tree_print)
 #end method
@@ -110,22 +111,8 @@ def get_num_seqs(fasta):
   return count
 #end method
 
-def get_record_ids(fasta):
-  IDs = []
-  with open(fasta, "r") as handle:
-    for n, record in enumerate(SeqIO.parse(handle, "fasta")):
-        #id = record.id
-        #desc = record.description
-        #pseq = record.seq
-        #count += 1
-        IDs.append(record.description)
-    #end for
-  return IDs
-#end method
-
 """# **Subsampling logic**"""
 def subsample(fasta, distances, num_seqs):
-  global all_record_IDs
   print("# Sorting TN93 distances (low to high)")
   
   # This needs to be done once, no?
@@ -175,25 +162,22 @@ def subsample(fasta, distances, num_seqs):
     
     #print("# Chosen to exclude:", [to_exclude], D, ",".join([ID1, ID2]))
     print("# Iteration:", count)
-    
-    # Logic to exit at the end.
-    if count == len(all_record_IDs):
-        print("# Exiting last iteration, nothing left.")
-        break
-    #end if
     print("# Chosen to exclude:", [to_exclude])
     print("# Full entry of TN93 file(for debugging):", ",".join([ID1, ID2, D]))
     count += 1
     
     # Save the fasta, and the newick
     output_dna(fasta, excluded_IDs)
-    output_nwk(tree, excluded_IDs, all_record_IDs)
+    output_nwk(tree, excluded_IDs)
     
     print()
   #end for
 #end method
 
 """# **Main/Driver code**"""
+
+# Test code
+#fasta = "Test.aln"
 fasta = snakemake.params.fasta
 tree = snakemake.params.tree
 distances = snakemake.params.distances
@@ -209,14 +193,10 @@ num_seqs = get_num_seqs(fasta)
 
 print("## Number of sequences (in fasta):", num_seqs)
 
-all_record_IDs = get_record_ids(fasta)
-#print("## Number of records:", len(all_record_IDs))
-#print(all_record_IDs)
-
 print("## Starting subsampling...")
 print()
 
-# Heavy lifting done here .. function
+# Main function
 subsample(fasta, distances, num_seqs)
 
 # End of file
