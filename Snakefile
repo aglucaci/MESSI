@@ -105,12 +105,12 @@ rule fel:
         for item in range(len(input.alignments)):
             print(input.alignments[item], input.trees[item])
             #cmd = "hyphy FEL --alignment" + input.alignments[item] + " --tree " + input.trees[item]
-            cmd = " ".join(["hyphy", "FEL", "--alignment", input.alignments[item], "--tree", input.trees[item], "--ci", "Yes])
+            cmd = " ".join(["hyphy", "FEL", "--alignment", input.alignments[item], "--tree", input.trees[item], "--ci", "Yes"])
             print(cmd)
             os.system(cmd)        
 #end rule FEL
 
-rule fel:
+rule fel_internal:
     input:
         alignments = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta"), N=Entries),
         trees = expand(os.path.join(OutputDirectory, Tree_file + ".{N}.subsampled.nwk"), N=Entries)
