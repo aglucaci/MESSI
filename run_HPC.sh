@@ -12,11 +12,11 @@ snakemake \
       -s Snakefile \
       --cluster-config cluster.yml \
       --cluster "qsub -V -N MESSI -l nodes={cluster.nodes}:ppn={cluster.ppn} -l walltime=120:00:00 -q {cluster.name} -e logs -o logs" \
-      --jobs 1 all \
-      --rerun-incomplete \
+      --jobs 10 all \
       --keep-going \
       --reason \
-      --latency-wait 60 \
+      --rerun-incomplete \
+      --latency-wait 120 \
       --use-conda
 
 # End of file 

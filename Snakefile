@@ -24,29 +24,40 @@ import glob
 # Declares
 #----------------------------------------------------------------------------
 configfile: 'config.yml'
+
+# Settings from config file
 Alignment_file = config["Alignment"]
 Tree_file = config["Newick"]
+
 Alignment_input = os.path.join("Data", Alignment_file)
 Tree_input = os.path.join("Data", Tree_file)
+
 records = list(SeqIO.parse(Alignment_input, "fasta"))
 
 # Report to user
 print("# MESSI -- Molecular Evolution SubSampling Investigator ")
 print("# @Author: Alexander G Lucaci")
-print("")
+print("# 2021: Version 0.001")
 
-print("# Loading initial FASTA:", Alignment_input) 
-print("# Loading initial NEWICK:", Tree_input) 
+print("# Loading initial FASTA from:", Alignment_input) 
+print("# Loading initial NEWICKf from:", Tree_input) 
 print("# Total sequences (tips): %i" % len(records))
 print()
 
-lower_limit = 3 # run until 3 sequences left ideally, cant go lower..
+lower_limit = 3 # run until 3 sequences left ideally, cant go lower.
 
-Entries = list(range(lower_limit, len(records)))
+Entries = list(range(lower_limit, len(records))) 
+
 print("# Number of subsamples we will examine:", len(Entries))
 
-OutputDirectory = "Results"
+WD = config["WD"]
+OutputDirectory = os.path.join(WD, config["OutputDirectory"])
+
+
+NP = 16
+
 print("# Results will be saved to following folder:", OutputDirectory)
+
 #----------------------------------------------------------------------------
 # Helper functions
 #----------------------------------------------------------------------------
@@ -55,6 +66,7 @@ print("# Results will be saved to following folder:", OutputDirectory)
 # Rule ALL
 #----------------------------------------------------------------------------
 # Do distance calculations
+
 rule all:
      input:
          os.path.join(OutputDirectory, Alignment_file + ".dst"), 
@@ -102,6 +114,21 @@ rule subsampling:
 #----------------------------------------------------------------------------
 # Selection analyses
 #----------------------------------------------------------------------------
+
+rule fel:
+    input:
+        alignment = os.path.join(OutputDirectory, Alignment_file + ".{Entries}.subsampled.fasta"),
+        tree = os.path.join(OutputDirectory, Tree_file + ".{Entries}.subsampled.nwk")   
+    conda: "environment.yml"
+    output:
+        results = os.path.join(OutputDirectory, Alignment_file + ".{Entries}.subsampled.fasta.FEL.json")
+    shell:
+        "mpirun -np {NP} hyphy FEL --alignment {input.alignment} --tree {input.tree} --output {output.results} --ci Yes"
+#end rule FEL
+
+
+
+"""
 rule fel:
     input:
         alignments = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta"), N=Entries),
@@ -117,121 +144,7 @@ rule fel:
             print(cmd)
             os.system(cmd)        
 #end rule FEL
-
-rule fel_internal:
-    input:
-        alignments = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta"), N=Entries),
-        trees = expand(os.path.join(OutputDirectory, Tree_file + ".{N}.subsampled.nwk"), N=Entries)
-    output:
-        results = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta.FEL-internal.json"), N=Entries)
-    run:
-        for item in range(len(input.alignments)):
-            print(input.alignments[item], input.trees[item])
-            cmd = " ".join(["hyphy", "FEL", "--alignment", input.alignments[item], "--branches", "Internal", "--ci", "Yes", "--tree", input.trees[item]])
-            print(cmd)
-            os.system(cmd)        
-#end rule FEL
-
-rule meme:
-    input:
-        alignments = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta"), N=Entries),
-        trees = expand(os.path.join(OutputDirectory, Tree_file + ".{N}.subsampled.nwk"), N=Entries)
-    output:
-        results = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta.MEME.json"), N=Entries)
-    run:
-        for item in range(len(input.alignments)):
-            print(input.alignments[item], input.trees[item])
-            cmd = " ".join(["hyphy", "MEME", "--alignment", input.alignments[item], "--tree", input.trees[item]])
-            print(cmd)
-            os.system(cmd)
-        #end for
-#end rule meme
-
-rule slac:
-    input:
-        alignments = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta"), N=Entries),
-        trees = expand(os.path.join(OutputDirectory, Tree_file + ".{N}.subsampled.nwk"), N=Entries)
-    output:
-        results = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta.SLAC.json"), N=Entries)
-    run:
-        for item in range(len(input.alignments)):
-            print(input.alignments[item], input.trees[item])
-            cmd = " ".join(["hyphy", "SLAC", "--alignment", input.alignments[item], "--tree", input.trees[item]])
-            print(cmd)
-            os.system(cmd)
-        #end for
-#end rule slac
-
-#FitMG="/home/aglucaci/hyphy-analyses/FitMG94/FitMG94.bf"
-#NP=8
-#echo $HYPHYMP LIBPATH=$RES $FitMG --alignment $FASTA --tree $TREE --rooted No --lrt Yes --type global --frequencies CF3x4 
-#$HYPHYMP LIBPATH=$RES $FitMG --alignment $FASTA --tree $TREE --rooted No --lrt Yes --type global --frequencies CF3x4 
-
-FITMG94_bf = "/Users/alex/Documents/hyphy-analyses/FitMG94/FitMG94.bf"
-
-rule fitmg94:
-    input:
-        alignments = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta"), N=Entries),
-        trees = expand(os.path.join(OutputDirectory, Tree_file + ".{N}.subsampled.nwk"), N=Entries)
-    output:
-        results = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta.FITTER.json"), N=Entries)
-    run:
-        for item in range(len(input.alignments)):
-            print(input.alignments[item], input.trees[item])
-            cmd = " ".join(["hyphy", FITMG94_bf, "--alignment", input.alignments[item], "--tree", input.trees[item], "--rooted", "No", "--lrt", "Yes", "--type", "global", "--frequencies", "CF3x4"])
-            print(cmd)
-            os.system(cmd)
-        #end for
-#end rule fitmg94
-
-rule FUBAR:
-    input:
-        alignments = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta"), N=Entries),
-        trees = expand(os.path.join(OutputDirectory, Tree_file + ".{N}.subsampled.nwk"), N=Entries)
-    output:
-        results = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta.FUBAR.json"), N=Entries)
-    run:
-        for item in range(len(input.alignments)):
-            print(input.alignments[item], input.trees[item])
-            #cmd = "hyphy FEL --alignment" + input.alignments[item] + " --tree " + input.trees[item]
-            cmd = " ".join(["hyphy", "FUBAR", "--alignment", input.alignments[item], "--tree", input.trees[item]])
-            print(cmd)
-            os.system(cmd)
-        
-#end rule fubar
-
-rule BUSTEDS:
-    input:
-        alignments = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta"), N=Entries),
-        trees = expand(os.path.join(OutputDirectory, Tree_file + ".{N}.subsampled.nwk"), N=Entries)
-    output:
-        results = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta.BUSTEDS.json"), N=Entries)
-    run:
-        for item in range(len(input.alignments)):
-            print(input.alignments[item], input.trees[item])
-            #cmd = "hyphy FEL --alignment" + input.alignments[item] + " --tree " + input.trees[item]
-            cmd = " ".join(["hyphy", "BUSTED", "--alignment", input.alignments[item], "--tree", input.trees[item]])
-            print(cmd)
-            os.system(cmd)
-        
-#end rule BUSTEDS
-
-rule aBSREL:
-    input:
-        alignments = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta"), N=Entries),
-        trees = expand(os.path.join(OutputDirectory, Tree_file + ".{N}.subsampled.nwk"), N=Entries)
-    output:
-        results = expand(os.path.join(OutputDirectory, Alignment_file + ".{N}.subsampled.fasta.aBSREL.json"), N=Entries)
-    run:
-        for item in range(len(input.alignments)):
-            print(input.alignments[item], input.trees[item])
-            #cmd = "hyphy FEL --alignment" + input.alignments[item] + " --tree " + input.trees[item]
-            cmd = " ".join(["hyphy", "ABSREL", "--alignment", input.alignments[item], "--tree", input.trees[item]])
-            print(cmd)
-            os.system(cmd)
-        
-#end rule aBSREL
-
+"""
 #----------------------------------------------------------------------------
 # End of file
 #----------------------------------------------------------------------------
