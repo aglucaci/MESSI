@@ -1,0 +1,94 @@
+{
+ "gtr-fit":{
+   "EFV":{
+     "IINxdImt.model":      {
+{0.3232016210739615} 
+      {0.2211246200607903} 
+      {0.2284701114488349} 
+      {0.2272036474164134} 
+      }
+    },
+   "LogL":-2081.337401384105,
+   "Trees":    {
+{"((A_Argentin_A_3105_93:0.005239609079700168,A_Brisbane_8_96:0.02397230739320811)Node2:0.02944744778221673,A_Uruguay_3_88:0.01930169524771341,A_Bilthoven_6022_72:0.08250173842978517)"} 
+    },
+   "branch length":{
+     "0":{
+       "A_Argentin_A_3105_93":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.01636489289612433
+          },
+         "MLE":0.005239609079700168
+        },
+       "A_Bilthoven_6022_72":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.2576780238011113
+          },
+         "MLE":0.08250173842978517
+        },
+       "A_Brisbane_8_96":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.07487280768382618
+          },
+         "MLE":0.02397230739320811
+        },
+       "A_Uruguay_3_88":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.06028506528592728
+          },
+         "MLE":0.01930169524771341
+        },
+       "Node2":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.09197333650085349
+          },
+         "MLE":0.02944744778221673
+        }
+      }
+    },
+   "global":{
+     "Substitution rate from nucleotide A to nucleotide C":{
+       "ID":"IINxdImt.model.theta_AC",
+       "MLE":0.298115620260261
+      },
+     "Substitution rate from nucleotide A to nucleotide G":{
+       "ID":"IINxdImt.model.theta_AG",
+       "MLE":1,
+       "constraint":"1"
+      },
+     "Substitution rate from nucleotide A to nucleotide T":{
+       "ID":"IINxdImt.model.theta_AT",
+       "MLE":0.1456343211109334
+      },
+     "Substitution rate from nucleotide C to nucleotide G":{
+       "ID":"IINxdImt.model.theta_CG",
+       "MLE":0.0387320739814545
+      },
+     "Substitution rate from nucleotide C to nucleotide T":{
+       "ID":"IINxdImt.model.theta_CT",
+       "MLE":0.8512726351057581
+      },
+     "Substitution rate from nucleotide G to nucleotide T":{
+       "ID":"IINxdImt.model.theta_GT",
+       "MLE":0.1833972371469448
+      }
+    },
+   "parameters":13
+  },
+ "settings":{
+   "burn-in":1000000,
+   "chain-length":2000000,
+   "chains":1,
+   "concentration":0.5,
+   "grid size":20,
+   "method":"Variational-Bayes",
+   "non-zero":0,
+   "posterior":0.9,
+   "samples":100
+  }
+}

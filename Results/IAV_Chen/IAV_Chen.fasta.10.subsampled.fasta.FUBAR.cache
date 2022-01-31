@@ -1,0 +1,178 @@
+{
+ "gtr-fit":{
+   "EFV":{
+     "PwEFdKey.model":      {
+{0.322998986828774} 
+      {0.2205673758865248} 
+      {0.2277608915906788} 
+      {0.2286727456940223} 
+      }
+    },
+   "LogL":-2676.92212917584,
+   "Trees":    {
+{"((A_Albany_14_1978:0.004647363899829423,(A_HongKong_46_80:0.01015372882908911,(A_Stockholm_4_1985:0.01343675058029177,((A_Uruguay_3_88:0.01333753122101377,A_Colorado_2_86:0.008237662688324413)Node10:0.004171031849505263,((A_Argentin_A_3105_93:0.004260119413861338,A_Argentin_A_3779_94:0.01423927658736479)Node14:0.001959255473340057,A_Brisbane_8_96:0.02309633084087619)Node13:0.03283625871485756)Node9:0.008774242318336579)Node7:0.01587241443996118)Node5:0.007805637161617178)Node3:0.04714958672148684,A_Bilthoven_6022_72:0.01460086433368099,A_Memphis_1_1971:0.01888598257145066)"} 
+    },
+   "branch length":{
+     "0":{
+       "A_Albany_14_1978":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.01432375491857664
+          },
+         "MLE":0.004647363899829423
+        },
+       "A_Argentin_A_3105_93":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.01313021913568247
+          },
+         "MLE":0.004260119413861338
+        },
+       "A_Argentin_A_3779_94":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.04388722562972221
+          },
+         "MLE":0.01423927658736479
+        },
+       "A_Bilthoven_6022_72":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.04500168414242525
+          },
+         "MLE":0.01460086433368099
+        },
+       "A_Brisbane_8_96":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.07118577103359955
+          },
+         "MLE":0.02309633084087619
+        },
+       "A_Colorado_2_86":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.02538950338143156
+          },
+         "MLE":0.008237662688324413
+        },
+       "A_HongKong_46_80":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.03129505810011925
+          },
+         "MLE":0.01015372882908911
+        },
+       "A_Memphis_1_1971":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.05820895276995592
+          },
+         "MLE":0.01888598257145066
+        },
+       "A_Stockholm_4_1985":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.0414137404263105
+          },
+         "MLE":0.01343675058029177
+        },
+       "A_Uruguay_3_88":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.04110793399149947
+          },
+         "MLE":0.01333753122101377
+        },
+       "Node10":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.01285564015593522
+          },
+         "MLE":0.004171031849505263
+        },
+       "Node13":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.1012054430021844
+          },
+         "MLE":0.03283625871485756
+        },
+       "Node14":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.006038669626028834
+          },
+         "MLE":0.001959255473340057
+        },
+       "Node3":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.1453209043379498
+          },
+         "MLE":0.04714958672148684
+        },
+       "Node5":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.02405794684819977
+          },
+         "MLE":0.007805637161617178
+        },
+       "Node7":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.04892076009206545
+          },
+         "MLE":0.01587241443996118
+        },
+       "Node9":{
+         "Evolutionary time parameter":{
+           "ID":"t",
+           "MLE":0.02704330869563923
+          },
+         "MLE":0.008774242318336579
+        }
+      }
+    },
+   "global":{
+     "Substitution rate from nucleotide A to nucleotide C":{
+       "ID":"PwEFdKey.model.theta_AC",
+       "MLE":0.2587289629790183
+      },
+     "Substitution rate from nucleotide A to nucleotide G":{
+       "ID":"PwEFdKey.model.theta_AG",
+       "MLE":1,
+       "constraint":"1"
+      },
+     "Substitution rate from nucleotide A to nucleotide T":{
+       "ID":"PwEFdKey.model.theta_AT",
+       "MLE":0.1358243511949791
+      },
+     "Substitution rate from nucleotide C to nucleotide G":{
+       "ID":"PwEFdKey.model.theta_CG",
+       "MLE":0.08375939102776453
+      },
+     "Substitution rate from nucleotide C to nucleotide T":{
+       "ID":"PwEFdKey.model.theta_CT",
+       "MLE":0.9721618209699149
+      },
+     "Substitution rate from nucleotide G to nucleotide T":{
+       "ID":"PwEFdKey.model.theta_GT",
+       "MLE":0.133499340191493
+      }
+    },
+   "parameters":25
+  },
+ "settings":{
+   "burn-in":1000000,
+   "chain-length":2000000,
+   "chains":1,
+   "concentration":0.5,
+   "grid size":20,
+   "method":"Variational-Bayes",
+   "non-zero":0,
+   "posterior":0.9,
+   "samples":100
+  }
+}
