@@ -1,4 +1,4 @@
-# SubsamplingSequences
+# Molecular Evolution SubSampling Investigator
 
 Install via conda env create -f environment.yml. 
 
