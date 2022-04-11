@@ -13,11 +13,11 @@ A helper script is included to create a tmux session titled "MESSI", you can ena
 
 ## Configure your HPC environment
 
-A yaml configuration file is included ```cluster.yml``` this species the name and ppn of your HPC environments job task queue to use.
+A JSON configuration file is included ```cluster.json``` this species the name and ppn of your HPC environments job task queue to use.
 
 ## Configure your test dataset
 
-A yaml configuration file is included ```config.yml``` this specifies the file names of your input alignment (required) and newick tree (required). These files should be placed in the ```Data/``` folder directly. Current design also requires that you specify your working directory "WD" and the output directory, typicall this is the "Results/" folder.
+A YAML configuration file is included ```config.yml``` this specifies the file names of your input alignment (required) and newick tree (required). These files should be placed in the ```Data/``` folder directly. Current design also requires that you specify your working directory "WD" and the output directory, typicall this is the "Results/" folder.
 
 ## Default empirical data
 
