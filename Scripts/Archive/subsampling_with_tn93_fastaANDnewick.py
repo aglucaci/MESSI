@@ -70,8 +70,12 @@ def output_nwk(tree, excluded_IDs, all_record_IDs):
   #end with
   
   # Newick, branch pruning logic.
-  t = Tree(tree)
-  
+  try:
+      t = Tree(tree)
+  except:
+      t = Tree(tree, format=1)
+  #end try
+
   # Pruning logic here --------------------------------------------
   KeepThese = []
   #for item in excluded_IDs:
