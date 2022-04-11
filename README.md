@@ -7,6 +7,10 @@ This will create a virtual environment called "MESSI" with the necessary depende
 
 You can also start this from the "Initialize.sh" file with ```bash Initialize.sh```
 
+## Create tmux session
+
+A helper script is included to create a tmux session titled "MESSI", you can enable this with ```bash MakeTmuxSession.sh```
+
 ## Data
 
 > Data/13-Datasets_Split/benchmark/
