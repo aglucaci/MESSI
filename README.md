@@ -1,4 +1,4 @@
-# Molecular Evolution SubSampling Investigator
+# Molecular Evolution SubSampling Investigator (MESSI)
 
 ## Install conda environment
 > conda env create -f environment.yml
