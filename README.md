@@ -1,7 +1,7 @@
 # Molecular Evolution SubSampling Investigator
 
 ## Install conda environment
-> conda env create -f environment.yml. 
+> conda env create -f environment.yml
 
 This will create a virtual environment called "MESSI" with the necessary dependencies.
 
