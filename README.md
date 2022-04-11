@@ -1,6 +1,6 @@
 # Molecular Evolution SubSampling Investigator
 
-Install via conda env create -f environment.yml. 
+> Install via conda env create -f environment.yml. 
 
 
 This will create a virtual environment called (MEASubsampling) with the necessary dependencies.
