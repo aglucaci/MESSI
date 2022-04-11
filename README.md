@@ -17,7 +17,7 @@ A JSON configuration file is included ```cluster.json``` this species the name a
 
 ## Configure your test dataset
 
-A YAML configuration file is included ```config.yml``` this specifies the file names of your input alignment (required) and newick tree (required). These files should be placed in the ```Data/``` folder directly. Current design also requires that you specify your working directory "WD" and the output directory, typicall this is the "Results/" folder.
+A YAML configuration file is included ```config.yml``` this specifies the file names of your input alignment (required) and newick tree (required). You should also specify your dataset label via the "Tag" parameter, this will be the subdirectory of the "Results" folder where your output will be stored. These files should be placed in the ```Data/``` folder directly. Current design also requires that you specify your working directory "WD" and the output directory, typicall this is the "Results/" folder.
 
 ## Default empirical data
 
