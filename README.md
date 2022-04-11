@@ -22,6 +22,7 @@ A yaml configuration file is included ```config.yml``` this specifies the file n
 ## Default Data
 
 > Data/13-Datasets_Split/benchmark/
+
 Contains the 13 empirical datasets (in NEXUS format) split out to their corresponding FASTA and Newick file. With accompanying scripts.
 
-Place your alignment and newick tree under investigation directly into the "Data/" folder.
+Note: Place your alignment and newick tree under investigation directly into the "Data/" folder.
