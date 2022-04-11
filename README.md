@@ -5,6 +5,7 @@
 
 This will create a virtual environment called "MESSI" with the necessary dependencies.
 
+You can also start this from the "Initialize.sh" file with ```bash Initialize.sh```
 
 ## Data
 
